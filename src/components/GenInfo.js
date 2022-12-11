@@ -1,51 +1,24 @@
 import React, { Component } from 'react';
 
 class GenInfo extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      name: '',
-      age: '',
-      nationality: '',
-      email: '',
-      editMode: true,
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e) {
-    const { id, value } = e.target;
-
-    this.setState({
-      ...this.state,
-      [id]: value,
-    });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.setState({
-      ...this.state,
-      editMode: !this.state.editMode,
-    });
+  constructor(props) {
+    super(props);
+    this.props = props;
   }
 
   render() {
-    const { name, age, nationality, email } = this.state;
+    const { name, age, nationality, email, editMode } = this.props.stateInfo;
 
-    if (this.state.editMode)
+    if (editMode)
       return (
         <div>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={(e) => this.props.handleSubmit(e, 'genInfo')}>
             <h2>General Information</h2>
             <div className='formLine'>
               <label htmlFor='name'>Name:</label>
               <input
                 value={name}
-                onChange={this.handleChange}
+                onChange={(e) => this.props.handleChange(e, 'genInfo')}
                 type='text'
                 id='name'
               />
@@ -54,7 +27,7 @@ class GenInfo extends Component {
               <label htmlFor='age'>Age:</label>
               <input
                 value={age}
-                onChange={this.handleChange}
+                onChange={(e) => this.props.handleChange(e, 'genInfo')}
                 type='number'
                 id='age'
               />
@@ -63,7 +36,7 @@ class GenInfo extends Component {
               <label htmlFor='nationality'>Nationality:</label>
               <input
                 value={nationality}
-                onChange={this.handleChange}
+                onChange={(e) => this.props.handleChange(e, 'genInfo')}
                 type='text'
                 id='nationality'
               />
@@ -72,7 +45,7 @@ class GenInfo extends Component {
               <label htmlFor='email'>Email:</label>
               <input
                 value={email}
-                onChange={this.handleChange}
+                onChange={(e) => this.props.handleChange(e, 'genInfo')}
                 type='text'
                 id='email'
               />
@@ -88,7 +61,9 @@ class GenInfo extends Component {
           <div>{age}</div>
           <div>{nationality}</div>
           <div>{email}</div>
-          <button onClick={this.handleSubmit}>Edit</button>
+          <button onClick={(e) => this.props.handleSubmit(e, 'genInfo')}>
+            Edit
+          </button>
         </div>
       );
   }
